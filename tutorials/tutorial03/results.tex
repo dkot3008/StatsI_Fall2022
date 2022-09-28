@@ -20,7 +20,7 @@
 	A preliminary inspection of the data revealed an apparently non-random distribution of critical ratings according to genre. The tables below provide a summary of raw and proportional distributions.
 	\begin{figure}
 			\begin{verbatim}
-	copy and paste here the console output from your raw contingency table
+critics_ratinggenre                Rotten Fresh Certified Fresh  Action & Adventure     48     9               8  Comedy                 63    14              10  Documentary             3    32              17  Drama                 124   106              75  Mystery & Suspense     29    23               7
 			\end{verbatim}
 		\caption{\footnotesize Contingency table}
 	\end{figure}
@@ -35,12 +35,12 @@ Visualisation of the distribution of the data appears to confirm that certain ca
 
 \begin{figure}[h!]\centering
 	\caption{\footnotesize Bar plot}
-	\includegraphics[width=.75\textwidth]{name of file goes here}
+	\includegraphics[width=.75\textwidth]{barplot.png}
 \end{figure} 
 
 Finally, a statistical test was performed on the data using chi square goodness of fit. The code used is detailed below.
 
-\lstinputlisting[language=R, firstline=?, lastline=?]{tutorial03.R}
+\lstinputlisting[language=R, firstline=185, lastline=185]{tutorial03.R}
 
 The results of the test were as follows:
 
