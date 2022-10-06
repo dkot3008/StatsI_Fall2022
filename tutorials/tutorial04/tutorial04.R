@@ -4,15 +4,16 @@
 
 ## Packages
 library(ggplot2) # Load our packages here
-
+library(tidyverse)
 ## Assign data
 dat <- midwest # A built-in dataset
-
+help("summary")
 ## Explore data
 ?midwest
 # use your own code here to explore
-
-
+glimpse(midwest)
+summary(midwest)
+unique(dat$state)
 ### ggplot
 
 # The ggplot package is probably now the most popular way of plotting in R. 
@@ -24,9 +25,14 @@ dat <- midwest # A built-in dataset
 # A simple ggplot:
 ggplot(aes(x = x1, y = y1), # We use the aes() function to supply an x and y argument
        data = anscombe) + # We use the `+` operator to add an additional geom
-  geom_point()
+  geom_point()+
+  geom_smooth(method = "lm")+
+  theme_bw()
+  
+help("ggplot2-package")
+help(title)
 
-# To use ggplot, rather than the plot() function, we call the ggplot() 
+# To "ggplot"# To use ggplot, rather than the plot() function, we call the ggplot() 
 # function. We supply to it our x and y arguments *inside* the aes() 
 # function, and our data using the argument `data =`. We then *add* the 
 # type of plot we want as a *geom* using the + operator. Here, we want a 
@@ -36,10 +42,17 @@ ggplot(aes(x = x1, y = y1), # We use the aes() function to supply an x and y arg
 # percent college educated is used to predict the percentage of people
 # below the poverty line.
 
-ggplot(aes(x = , # add the independent variable
-           y = ), # add the dependent variable
-       data = ) + # add the data source
-  geom_point()
+ggplot(aes(x = percollege, # add the independent variable
+           y = percbelowpoverty ), # add the dependent variable
+       data = dat) + # add the data source
+  geom_point()+
+  geom_smooth(method = "lm")+
+  labs(title = "Relationship between college education and state poverty",
+       x= "pecent college educated",
+       y= "percent  below the poverty line",
+       caption = "hello there")
+
+
 
 # How would we add a title to this plot? Try looking in the help file and
 # using google to find out.
@@ -60,14 +73,26 @@ cor.plot(Filter(is.numeric, dat))
 
 pairs(dat[c("poptotal", "percwhite", "percblack", "perchsd", 
             "percollege", "percprof", "percbelowpoverty")],
-      upper.panel = NULL) # What does this argument change?
+      upper.panel = NULL
+      ) # What does this argument change?
 
 # Exercise: from your visual exploration of the scatter plots of 
 # correlation, pick two variables to run the cor() function on. 
 # Visualise these separately using ggplot, and save the output to file.
 
+ggplot(aes(x= percollege,
+           y=percprof),
+       data = dat) +
+  geom_point(alpha = 0.4,#position = "jitter"
+             )+
+  geom_smooth(method = "loess")+
+  labs(title = "College education and professional jobs",
+       y="% professional",
+       x= "% College educated")
+       
+
 # Code to save your plot (saves last plot)
-ggsave("corr_plot",
+ggsave("corr_plot.png",
        device = "png",
        dpi = 300)
 
@@ -85,7 +110,7 @@ ggsave("corr_plot",
 # according to their density.
 
 ggplot(aes(percbelowpoverty, percollege), data = dat) +
-  geom_point(alpha = 0.2) # set alpha manually to between 0 and 1
+  geom_point(alpha = 0.5) # set alpha manually to between 0 and 1
 
 # 2. Jitter
 # We can use the position = "jitter" argument to add random noise to the 
@@ -94,7 +119,7 @@ ggplot(aes(percbelowpoverty, percollege), data = dat) +
 
 ggplot(aes(percbelowpoverty, state), data = dat) +
   geom_point(
-    #position = "jitter" # uncomment this line and run again
+   position = "jitter" #uncomment this line and run again
     )
 
 # 3. Faceting
@@ -132,9 +157,9 @@ abline(coll_pov, # our regression model
        col = "blue")
 
 # How would we plot this using ggplot?
-ggplot(aes(x = , 
-           y = ), 
-       data = ) +
+ggplot(aes(x = percollege, 
+           y = percbelowpoverty), 
+       data = coll_pov) +
   geom_point() +
   geom_smooth(method = "lm", formula = y ~ x)
 
