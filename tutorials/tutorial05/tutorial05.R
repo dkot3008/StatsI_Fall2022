@@ -4,7 +4,10 @@
 
 ## Packages
 library(tidyverse) # Load our packages here
-library(broom) # If not installed - function for installing?
+library(broom) 
+# If not installed - function for installing?
+install.packages("broom")
+## bad etquette to include install.packages()
 
 ?tidyverse
 browseVignettes(package = "tidyverse")
@@ -17,8 +20,9 @@ browseVignettes(package = "tidyverse")
 # we can read in a csv file using the read_csv() function, which is 
 # similar to base R's read.csv() function.
 dat <- read.csv("movies.csv")
+dat1 <- read_csv("movies.csv")
+glimpse(dat)
 
-##########
 # Exercise
 ##########
 
@@ -47,7 +51,11 @@ mutate(dat, rel_mon = month.abb[thtr_rel_month])
 ## Group by and summarise into a single row
 by_month <- group_by(dat, thtr_rel_month)
 summarise(by_month, n = n())
-
+plot("feature film","runtime")
+ c(dat$title_type)
+ sort(dat$title_type)
+count(dat$title_type)
+ftype <- table(dat$title_type)
 ##########
 # The pipe
 ##########
@@ -76,9 +84,25 @@ dat %>%
 # column. Which is the most popular month for Horror films to be 
 # released?
 
+dat %>%
+  filter(genre == "Horror") %>% # filter on the rows
+  select(thtr_rel_month) %>% # select one column
+  mutate(month = month.abb[thtr_rel_month]) %>% # change to month abbreviation
+  group_by(month) %>% # group data by month
+  summarise(n = n()) %>% # perform a summary operation (count the n per month)
+  arrange(desc(n)) # sort in descending order
+
+
 
 # 2. Using the dplyr commands you have learned, find the actor 
 # (actor1) with the most award wins. 
+glimpse(dat$best_actor_win)
+help("dplyr")
+dat %>$ 
+  filter(best_actor_win == "yes")%>%
+  group_by(actor1) %>%
+  summarise(n = n(()))%>%
+  arrange(desc(n))
 
 
 #######################
@@ -97,7 +121,7 @@ dat %>%
   mutate(month = month.abb[thtr_rel_month]) %>% 
   group_by(month) %>% 
   summarise(n = n()) %>%
-  mutate(prop_month = round(n / sum(n), 2)) %>% # mutate after our summarise to find the proportion
+  mutate(prop_month = round(n / sum(n), 3)) %>% # mutate after our summarise to find the proportion
   arrange(desc(prop_month))
 
 ##########
@@ -106,6 +130,18 @@ dat %>%
 
 # Using the code above as a template, perform the same operation on 
 # a subset of horror films
+
+
+horrorprop <- dat %>%  
+  filter(genre == "Horror") %>%
+  mutate(month = month.abb[thtr_rel_month]) %>% 
+  group_by(month) %>% 
+  summarise(n = n()) %>%
+  mutate(prop_month = round(n / sum(n), 3)) %>% # mutate after our summarise to find the proportion
+  arrange(desc(prop_month))
+
+boxplot(horrorprop)
+horrorprop
 
 
 #############
@@ -154,4 +190,51 @@ dat %>%
 # Are feature films getting longer? Use the dplyr functions you've 
 # learned about today to find out whether the average running time 
 # of feature films has increased in recent years.
+
+
+
+dat %>%
+  select(runtime, thtr_rel_year) %>% # just keep the two relevant cols
+  mutate(horror = genre == "Horror") %>% # make a new logical col for horror films
+  group_by(thtr_rel_month, horror) %>% # perform a nested grouping operation (release month, then T/F horror)
+  summarise(n = n()) %>% # get a raw count for each group
+  pivot_wider(names_from = horror, values_from = n) %>% # change the shape of our data
+  ungroup() %>%
+  mutate(All = round(`FALSE` / sum(`FALSE`), 2), # calculate proportions for all films
+         Horror = `TRUE` / sum(`TRUE`, na.rm = TRUE)) %>% # calculate proportions for horror films
+  select(thtr_rel_month, All, Horror) %>% # drop all other columns
+  pivot_longer(cols = c("All", "Horror"), names_to = "film_type") %>% # change the shape again!
+  mutate(month = factor(month.abb[thtr_rel_month], levels = month.abb)) %>% # create a factor for months
+  ggplot(aes(month, value)) + # plot the data
+  geom_col(aes(fill = film_type), position = "dodge") +
+  labs(title = "Proportion of Theatrical Releases by Month", y = "proportion") 
+
+dat %>%
+  filter(thtr_rel_year == "1998",runtime < 120)
+
+
+dat%>% 
+  filter(thtr_rel_year > 1995 & thtr_rel_year < 1999)%>%
+  filter(runtime > 120) %>%
+  select(title,runtime,thtr_rel_year)%>%
+  arrange(desc(runtime))
+
+a <- dat%>% 
+  filter(best_pic_win == "yes")%>%
+  summarise(mean_run_time = mean(runtime),
+  n=n(),
+  sd= sd(runtime))
+
+b <- dat%>%
+  summarise(mean_run_time = mean(runtime,na.rm = TRUE),
+  n=n(),
+  sd=sd(runtime,na.rm = TRUE))
+
+##Is it statistically signifigant
+#105.8215 sample=651
+#143.2857 sample= 7
+
+t.test(a,b)
+
+
 
