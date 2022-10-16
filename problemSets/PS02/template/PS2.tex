@@ -1,3 +1,4 @@
+
 \documentclass[12pt,letterpaper]{article}
 \usepackage{graphicx,textcomp}
 \usepackage{natbib}
@@ -93,11 +94,15 @@
 	\end{tabular}
 \end{table}
 
-\begin{enumerate}
+	\lstinputlisting[language=R, firstline=40, lastline=40]{my_answers.R}  
+
+	
 	
 	\item [(a)]
 	Calculate the $\chi^2$ test statistic by hand/manually (even better if you can do "by hand" in \texttt{R}).\\
 	\vspace{7cm}
+
+	\
 	
 	\item [(b)]
 	Now calculate the p-value from the test statistic you just created (in \texttt{R}).\footnote{Remember frequency should be $>$ 5 for all cells, but let's calculate the p-value here anyway.}  What do you conclude if $\alpha = 0.1$?\\
@@ -131,14 +136,9 @@ Chattopadhyay and Duflo were interested in whether women promote different polic
 
 \noindent Each observation in the data set represents a village and there are two villages associated with one GP (i.e. a level of government is called "GP"). Figure~\ref{fig:women_desc} below shows the names and descriptions of the variables in the dataset. The authors hypothesize that female politicians are more likely to support policies female voters want. Researchers found that more women complain about the quality of drinking water than men. You need to estimate the effect of the reservation policy on the number of new or repaired drinking water facilities in the villages.
 \vspace{.5cm}
-\begin{figure}
-	\centering
-	\includegraphics[width=0.7\linewidth]{Rplot.png}
-	\caption{}
-	\label{}
-\end{figure}
 
- \input{R.test}
+
+
 \newpage
 \begin{enumerate}
 	\item [(a)] State a null and alternative (two-tailed) hypothesis. 
