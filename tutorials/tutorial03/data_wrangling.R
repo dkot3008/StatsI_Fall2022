@@ -49,3 +49,6 @@ dat <- dat[, !names(dat)  %in% c("thtr_rel_year",
                                  "dvd_rel_day")]
 
 saveRDS(dat, "movies.rds")
+
+
+
