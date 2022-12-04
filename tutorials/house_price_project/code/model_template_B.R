@@ -15,8 +15,8 @@ pkgTest <- function(pkg){
 }
 
 # load necessary packages
-lapply(c("ggplot2", "stargazer", "tidyverse", "stringr", "broom"),  pkgTest)
-
+lapply(c("ggplot2", "stargazer", "tidyverse", "stringr", "broom", ),  pkgTest)
+library(plotly)
 # Load training data
 train <- readRDS("data/train.rds")
 
@@ -65,6 +65,35 @@ plot(mod) # we supply our lm object to plot()
   
 summary(mod)
 
+##Darraghs 2d model
+dat <- readRDS("data/train.rds")
+
+mod1 <- lm(AdjSalePrice ~ SqFtTotLiving + SqFtLot + Bathrooms + Bedrooms + BldgGrade + PropertyType, data = dat)
+dat <- cbind(dat, residuals = resid(mod1))
+
+zip_group_r <- dat %>%
+  group_by(ZipCode) %>%
+  summarise(med_price = median(residuals),
+            count = n()) %>%
+  arrange(med_price) %>%
+  mutate(cumul_count = cumsum(count),
+         ZipGroup_r = ntile(cumul_count, 5))
+dat <- dat %>%
+  left_join(select(zip_group_res, ZipCode, ZipGroup_r), by = "ZipCode")
+
+mod2 <- lm(AdjSalePrice ~ SqFtTotLiving + SqFtLot + Bathrooms + Bedrooms + BldgGrade + PropertyType + as.factor(ZipGroup_r), data = dat)
+
+stargazer(mod1, mod2, type = "html")
+
+
+ggplot(train, aes(SqFtTotLiving, AdjSalePrice, group = ZipGroup)) +
+  geom_point(aes(colour = ZipGroup)) +
+  geom_smooth(method = "lm", aes(colour = ZipGroup))
+
+plot_ly(data = train, z = ~AdjSalePrice, x = ~SqFtTotLiving, y = ~ZipGroup, 
+        color = ~as.factor(ZipGroup))
+
+
 ########## do not fill in below the line ###########
 
 # Load test data
@@ -94,3 +123,4 @@ mean_y <- mean(test$AdjSalePrice)
 tss <- sum((test$AdjSalePrice - mean_y)^2)
 rss <- sum((test$AdjSalePrice - test$prediction)^2)
 (r_sq <- 1 - (rss/tss))
+

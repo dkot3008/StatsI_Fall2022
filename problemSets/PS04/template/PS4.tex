@@ -98,35 +98,44 @@ help(Prestige)
 	
 	\item [(a)]
 	Create a new variable \texttt{professional} by recoding the variable \texttt{type} so that professionals are coded as $1$, and blue and white collar workers are coded as $0$ (Hint: \texttt{ifelse}).
+	\lstinputlisting[language=R, firstline=6, lastline=18]{ps4.R}  
 	
-	\vspace{6cm}
+	\vspace{2cm}
 	
 	
 	\item [(b)]
 	Run a linear model with \texttt{prestige} as an outcome and \texttt{income}, \texttt{professional}, and the interaction of the two as predictors (Note: this is a continuous $\times$ dummy interaction.)
+	\lstinputlisting[language=R, firstline=19, lastline=22]{ps4.R}  
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=0.7\linewidth]{"image 1"}
+	\caption{}
+	\label{fig:image-1}
+\end{figure}
 	
 	\vspace{6cm}
 	\item [(c)]
 	Write the prediction equation based on the result.
+		\lstinputlisting[language=R, firstline=26, lastline=26]{ps4.R}  
 	
 \newpage
 	\item [(d)]
 	Interpret the coefficient for \texttt{income}.
-	
+			\lstinputlisting[language=R, firstline=29, lastline=29]{ps4.R}  
 	\vspace{10cm}	
 	\item [(e)]
 	Interpret the coefficient for \texttt{professional}.
-	
+		\lstinputlisting[language=R, firstline=35, lastline=35]{ps4.R}  
 	\newpage
 	\item [(f)]
 	What is the effect of a \$1,000 increase in income on prestige score for professional occupations? In other words, we are interested in the marginal effect of income when the variable \texttt{professional} takes the value of $1$. Calculate the change in $\hat{y}$ associated with a \$1,000 increase in income based on your answer for (c).
-	
+			\lstinputlisting[language=R, firstline=41, lastline=43]{ps4.R}  
 	\vspace{10cm}
 	
 	
 	\item [(g)]
 	What is the effect of changing one's occupations from non-professional to professional when her income is \$6,000? We are interested in the marginal effect of professional jobs when the variable \texttt{income} takes the value of $6,000$. Calculate the change in $\hat{y}$ based on your answer for (c).
-	
+			\lstinputlisting[language=R, firstline=51, lastline=60]{ps4.R}  
 	
 \end{enumerate}
 
@@ -162,10 +171,14 @@ a precinct that was adjacent to a precinct in the treatment group (since people 
 \begin{enumerate}
 	\item [(a)] Use the results from a linear regression to determine whether having these yard signs in a precinct affects vote share (e.g., conduct a hypothesis test with $\alpha = .05$).
 	
+	\lstinputlisting[language=R, firstline=65, lastline=65]{ps4.R}  
+	
 	\newpage		
 	\item [(b)]  Use the results to determine whether being
 	next to precincts with these yard signs affects vote
 	share (e.g., conduct a hypothesis test with $\alpha = .05$).
+	
+	
 	
 	\vspace{7cm}
 	\item [(c)] Interpret the coefficient for the constant term substantively.
