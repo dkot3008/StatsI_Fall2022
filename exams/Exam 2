@@ -1,0 +1,162 @@
+\documentclass[12pt,letterpaper]{article}
+\usepackage{graphicx,textcomp}
+\usepackage{natbib}
+\usepackage{setspace}
+\usepackage{fullpage}
+\usepackage{color}
+\usepackage[reqno]{amsmath}
+\usepackage{amsthm}
+\usepackage{fancyvrb}
+\usepackage{amssymb,enumerate}
+\usepackage[all]{xy}
+\usepackage{endnotes}
+\usepackage{lscape}
+\newtheorem{com}{Comment}
+\usepackage{float}
+\usepackage{hyperref}
+\newtheorem{lem} {Lemma}
+\newtheorem{prop}{Proposition}
+\newtheorem{thm}{Theorem}
+\newtheorem{defn}{Definition}
+\newtheorem{cor}{Corollary}
+\newtheorem{obs}{Observation}
+\usepackage[compact]{titlesec}
+\usepackage{dcolumn}
+\usepackage{tikz}
+\usetikzlibrary{arrows}
+\usepackage{multirow}
+\usepackage{xcolor}
+\newcolumntype{.}{D{.}{.}{-1}}
+\newcolumntype{d}[1]{D{.}{.}{#1}}
+\definecolor{light-gray}{gray}{0.65}
+\usepackage{url}
+\usepackage{listings}
+\usepackage{color}
+
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+\lstdefinestyle{mystyle}{
+	backgroundcolor=\color{backcolour},   
+	commentstyle=\color{codegreen},
+	keywordstyle=\color{magenta},
+	numberstyle=\tiny\color{codegray},
+	stringstyle=\color{codepurple},
+	basicstyle=\footnotesize,
+	breakatwhitespace=false,         
+	breaklines=true,                 
+	captionpos=b,                    
+	keepspaces=true,                 
+	numbers=left,                    
+	numbersep=5pt,                  
+	showspaces=false,                
+	showstringspaces=false,
+	showtabs=false,                  
+	tabsize=2
+}
+\lstset{style=mystyle}
+\newcommand{\Sref}[1]{Section~\ref{#1}}
+\newtheorem{hyp}{Hypothesis}
+
+
+\title{Exam 2 }
+\date{Due: December 9th, 2022}
+\author{Applied Stats/Quant Methods 1}
+
+
+\begin{document}
+	\maketitle
+	\section*{Instructions}
+	\begin{itemize}
+		\item Please show your work! You may lose points by simply writing in the answer. If the problem requires you to execute commands in \texttt{R}, please include the code you used to get your answers. Please also include the \texttt{.R} file that contains your code. If you are not sure if work needs to be shown for a particular problem, please ask.
+		\item Your homework should be submitted electronically on GitHub.
+		\item This problem set is due before 23:59 on Sunday December 4, 2022. No late assignments will be accepted.
+	\end{itemize}
+	
+	
+	
+	\vspace{.5cm}
+	\section*{Question 1}
+	\vspace{.25cm}
+	\noindent 	
+	Define and describe why the following four (4) terms are important to hypothesis testing
+	and/or regression. You can earn full credit with just two or three sentences, but please be
+	specific and thorough.
+	 
+	 \newpage
+	\begin{enumerate}
+		
+		\item [(a)]
+		Residuals- Residuals can be used to determine if variables are related
+		
+		\vspace{1cm}
+		\item [(b)]
+		Categorical data- This a type of data that is representing a set of characteristics or traits,examples of this could be nationality or gender where there is a defined  amout of groups which you cna be assigned to. It has no order or rank.\\
+
+		Dummy variables- These are when you use a categroical variable as a predictor in a regression to seperate a group to see if the effect varies within the groups characteristics. An example fo this could be that without rnak at a job considered better work leads to mre income but if a dummy variable is implemented it can show if this effect is true for managers and not managers adding insight to data.
+		
+		\vspace{1cm}
+		\item [(c)]
+		Test statistic- This is a statistic that sumarrises how much data is different from what would be expected to observe if the null hypothesis were true 
+		\vspace{1cm}
+		\item [(d)]
+		Constituent term-This is at times also called "main effects" as in a multiple Regression are the variables which represent a portion of the effect.
+
+		
+	\end{enumerate}
+	
+	\newpage
+	
+	\section*{Question 2}
+	\vspace{.25cm}
+	\noindent 	Many of the wells used for drinking water in Bangladesh and other South Asian countries are contaminated with natural arsenic, affecting an estimated 100 million people. Arsenic is a cumulative poison, and exposure increases the risk of cancer and other diseases, with risks
+	estimated to be proportional to exposure.\\
+	We performed a regression analysis with the data to understand the factors that predict the arsenic level of 1000 households’ drinking water. Your outcome variable arsenic is a continuous measure of household i’s arsenic level in units of hundreds of micrograms per liter.\\
+	We estimated models with the following inputs:\\
+	• The distance (in kilometers/100) to the closest known commercial factory\\
+	• Depth of respondent’s well (binary variable; deep=1, not deep=0)
+\begin{figure}
+\centering
+\includegraphics[width=0.7\linewidth]{Q2}
+\caption{}
+\label{fig:q2}
+\end{figure}
+
+
+	
+	
+	\vspace{.5cm}
+	
+	
+	\vspace{.5cm}
+	\begin{enumerate}
+		\item [(a)] First, we successfully estimated an additive model with well depth and distance to
+		the nearest factory as the two predictors of a household’s arsenic level. The estimated
+		coefficients are found in the first column of the table above. Interpret the estimated
+		coefficients for the intercept and each predictor.\\
+		
+		
+
+		
+		\item [(b)]  Does the coefficient estimate for the closest known factory vary based on whether or not
+		a house has a deep well? If so, change your interpretation of the estimated coefficients
+		in part (a) to conform with the interactive model in column 2 of the table above. What
+		is the appropriate test to determine whether we should model the relationship between
+		distance, well depth, and arsenic levels using an additive or interactive model? What
+		information would you need to perform that test?
+		
+		
+		
+		\vspace{2cm}
+		\item [(c)] Using the ‘preferred’ model from Part B, compute the average difference in arsenic
+		levels between two households that have a deep well (=1), but one is closer to a factory
+		(dist100 = 0.42) than the other (dist100 = 2.12).
+		\vspace{7cm}
+		
+		
+	\end{enumerate}  
+	
+	
+\end{document}
